@@ -1,7 +1,6 @@
 // packages and requires --------------------------------
 const express = require('express');
-const path = require('path');
-const fs = require('fs');
+const routes = require('./routes');
 const app = express();
 
 
@@ -11,37 +10,11 @@ app.use(express.static('public'));
 // body parser
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+// routes module for API
+app.use(routes);
 
 // Port -------------------------------------------------
 const PORT = 3001;
-
-// Routes -----------------------------------------------
-// HTML pages ==================
-// landing page route
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-})
-// notes page route
-app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'notes.html'));
-})
-
-// API ================
-// get notes
-app.get('/api/notes', (req, res) => {
-
-})
-// post/save note
-app.post('/api/notes', (req, res) => {
-
-})
-
-app.delete('/api/notes/:id', (req, res) => {
-    
-})
-
-
-
 
 
 // Run server -------------------------------------------
