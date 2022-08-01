@@ -19,8 +19,7 @@ router.get('/', (req, res) => {
 
 // post/save note
 router.post('/', (req, res) => {
-    // saves posted note object as newNote
-    const newNote = req.body;
+    const {title, text} = req.body;
 
     // gets the current notes array from the db
     let notes = [];
@@ -31,6 +30,12 @@ router.post('/', (req, res) => {
         }
         notes = JSON.parse(data);
     });
+
+    const newNote = {
+        id: notes.length,
+        title,
+        text,
+    };
 
     // adds new note to the db data
     notes.push(newNote);
