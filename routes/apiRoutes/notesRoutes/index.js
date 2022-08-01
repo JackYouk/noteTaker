@@ -1,49 +1,34 @@
 const router = require('express').Router();
-const Note = require('../../../model/Note');
+const fs = require('fs');
 
+let notes;
 
 // get notes
-router.get('/api/notes', async (req, res) => {
-    try {
-        const notes = await Note.findAll();
-        console.log(notes);
+router.get('/', (req, res) => {
+    fs.readFile('../../../db/db.json', 'utf8', (err, data) => {
+        if(err){
+            console.error(err);
+            res.json(err);
+        }
+        notes = JSON.parse(data);
         res.json(notes);
-    } catch (error) {
-        res.status(500).json({error});
-    }
-})
+    });
+});
+
 // post/save note
-router.post('/api/notes', async (req, res) => {
-    const {title, text} = req.body;
-    try {
-        const newNote = await Note.create({
-            title,
-            text,
-        });
-        console.log(newNote);
-        res.json(newNote);
-    } catch (error) {
-        res.status(500).json({error});
-    }
-})
+router.post('/', (req, res) => {
+    const newNote = req.body;
+    fs.writeFile('../../../db/db.json', JSON.stringify(newNote), (err) => {
+        console.error(err);
+        res.json(err);
+    });
+    res.json(newNote);
+});
 
 // delete note
-router.delete('/api/notes/:id', async (req, res) => {
-    try {
-        const deletedNote = await Note.findByPk(req.params.id);
-        await Note.destroy(
-            {
-                where: {
-                    id: req.params.id
-                }
-            }
-        )
-        console.log(deletedNote);
-        res.json(deletedNote);
-    } catch (error) {
-        res.status(500).json({error});
-    }
-})
+router.delete('/:id', (req, res) => {
+
+});
 
 
 module.exports = router;

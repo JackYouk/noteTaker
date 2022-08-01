@@ -8,10 +8,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.0.1",
-    "express": "^4.16.4",
-    "mysql2": "^2.3.3",
-    "sequelize": "^6.21.3"
+    "express": "^4.16.4"
   },
   "repository": {
     "type": "git",
