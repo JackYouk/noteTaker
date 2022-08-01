@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const fs = require('fs');
 
-let notes;
 
 // get notes
 router.get('/', (req, res) => {
+    let notes;
     fs.readFile('../../../db/db.json', 'utf8', (err, data) => {
         if(err){
             console.error(err);
@@ -27,7 +27,26 @@ router.post('/', (req, res) => {
 
 // delete note
 router.delete('/:id', (req, res) => {
+    let notes;
+    const id = req.params.id;
+    fs.readFile('../../../db/db.json', 'utf8', (err, data) => {
+        if(err){
+            console.error(err);
+            res.json(err);
+        }
+        notes = JSON.parse(data);
+    });
+    for(let i = 0; i < notes.length; i++){
+        if(notes[i].id === parseInt(id)){
+            notes.splice(notes[i]);
+        }
+    }
 
+    fs.writeFile('../../../db/db.json', JSON.stringify(notes), (err) => {
+        console.error(err);
+        res.json(err);
+    });
+    res.json()
 });
 
 
