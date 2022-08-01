@@ -1,11 +1,13 @@
 const router = require('express').Router();
 const fs = require('fs');
+const path = require('path');
 
+const db = path.join(__dirname, '../../../db', 'db.json');
 
 // get notes
 router.get('/', (req, res) => {
-    let notes;
-    fs.readFile('../../../db/db.json', 'utf8', (err, data) => {
+    let notes = [];
+    fs.readFile(db, 'utf8', (err, data) => {
         if(err){
             console.error(err);
             res.json(err);
@@ -21,8 +23,8 @@ router.post('/', (req, res) => {
     const newNote = req.body;
 
     // gets the current notes array from the db
-    let notes;
-    fs.readFile('../../../db/db.json', 'utf8', (err, data) => {
+    let notes = [];
+    fs.readFile(db, 'utf8', (err, data) => {
         if(err){
             console.error(err);
             res.json(err);
@@ -34,7 +36,7 @@ router.post('/', (req, res) => {
     notes.push(newNote);
 
     // rewrites the database with the updated data
-    fs.writeFile('../../../db/db.json', JSON.stringify(notes), (err) => {
+    fs.writeFile(db, JSON.stringify(notes), (err) => {
         console.error(err);
         res.json(err);
     });
@@ -44,10 +46,10 @@ router.post('/', (req, res) => {
 
 // delete note
 router.delete('/:id', (req, res) => {
-    let notes;
+    let notes = [];
     const id = req.params.id;
     // gets the current data from db
-    fs.readFile('../../../db/db.json', 'utf8', (err, data) => {
+    fs.readFile(db, 'utf8', (err, data) => {
         if(err){
             console.error(err);
             res.json(err);
@@ -62,7 +64,7 @@ router.delete('/:id', (req, res) => {
     }
 
     // rewrites the database file with the updated data
-    fs.writeFile('../../../db/db.json', JSON.stringify(notes), (err) => {
+    fs.writeFile(db, JSON.stringify(notes), (err) => {
         console.error(err);
         res.json(err);
     });
