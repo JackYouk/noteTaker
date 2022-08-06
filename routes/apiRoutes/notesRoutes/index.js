@@ -91,27 +91,27 @@ router.post('/', (req, res) => {
 
 // delete note
 router.delete('/:id', (req, res) => {
-    let oldData;
-    fs.readFile(db, 'utf-8', (err, data) => {
-        if (err) {
-            return res.status(400).json({ err })
-        }
-        oldData = data;
-    });
-    console.log(oldData);
+    // let oldData;
+    // fs.readFile(db, 'utf-8', (err, data) => {
+    //     if (err) {
+    //         return res.status(400).json({ err })
+    //     }
+    //     oldData = data;
+    // });
+    // console.log(oldData);
 
-    const deleteThisId = req.params.id;
-    let newData;
-    // if(oldData.length > 0){
-        newData = oldData.splice(deleteThisId - 1, 1);
-        fs.writeFile(db, JSON.stringify(newData), err => {
-            if (err) {
-                return res.status(400).json({ err });
-            }
-            res.json(newData);
-        });
-    // }
-    // res.json("error: nothing to delete");
+    // const deleteThisId = req.params.id;
+    // let newData;
+    // // if(oldData.length > 0){
+    //     newData = oldData.splice(deleteThisId - 1, 1);
+    //     fs.writeFile(db, JSON.stringify(newData), err => {
+    //         if (err) {
+    //             return res.status(400).json({ err });
+    //         }
+    //         res.json(newData);
+    //     });
+    // // }
+    // // res.json("error: nothing to delete");
 });
 
 
